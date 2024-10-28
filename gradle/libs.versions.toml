@@ -6,6 +6,9 @@ appcompat_version = "1.7.0"
 constraintLayout_version = "2.1.4"
 material_version = "1.12.0"
 
+googleServices_version = "4.4.2"
+firebaseBom_version = "33.5.1"
+
 junit_version = "4.13.2"
 junit_ext_version  = "1.2.1"
 espresso_core_version  = "3.6.1"
@@ -16,9 +19,13 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 constraintLayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintLayout_version" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material_version" }
 
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom_version" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit_version" }
 junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit_ext_version" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso_core_version" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp_version" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices_version" }
