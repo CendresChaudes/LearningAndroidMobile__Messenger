@@ -10,4 +10,5 @@
     <string name="name_hint">Name</string>
     <string name="lastname_hint">Lastname</string>
     <string name="age_hint">Age</string>
+    <string name="logout">Logout</string>
 </resources>
