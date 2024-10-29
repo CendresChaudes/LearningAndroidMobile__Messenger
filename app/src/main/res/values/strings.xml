@@ -7,4 +7,7 @@
     <string name="sign_up">Sign up</string>
     <string name="sign_in">Sign in</string>
     <string name="reset_password">Reset password</string>
+    <string name="name_hint">Name</string>
+    <string name="lastname_hint">Lastname</string>
+    <string name="age_hint">Age</string>
 </resources>
