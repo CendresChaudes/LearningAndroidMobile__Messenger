@@ -3,6 +3,7 @@ package com.example.messenger.signIn;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -95,6 +96,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onChanged(FirebaseUser user) {
                 if (user != null) {
+                    Log.d("q", user.toString());
                     launchUsersScreen();
                     finish();
                 }

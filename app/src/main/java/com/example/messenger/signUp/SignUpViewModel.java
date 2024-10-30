@@ -7,13 +7,22 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.messenger.User;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpViewModel extends AndroidViewModel {
 
+    private static final String USERS_DB_NAME = "users";
+
     private final FirebaseAuth auth;
+    private final FirebaseDatabase firebaseDatabase;
+    private final DatabaseReference userDbRef;
 
     private final MutableLiveData<String> errorMessage;
     private final MutableLiveData<FirebaseUser> user;
@@ -22,6 +31,8 @@ public class SignUpViewModel extends AndroidViewModel {
         super(application);
 
         this.auth = FirebaseAuth.getInstance();
+        this.firebaseDatabase = FirebaseDatabase.getInstance();
+        this.userDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
 
         this.errorMessage = new MutableLiveData<>();
         this.user = new MutableLiveData<>();
@@ -38,6 +49,26 @@ public class SignUpViewModel extends AndroidViewModel {
     ) {
         this.auth
                 .createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        FirebaseUser firebaseUser = authResult.getUser();
+
+                        if (firebaseUser == null) {
+                            return;
+                        }
+
+                        User user = new User(
+                                firebaseUser.getUid(),
+                                name,
+                                lastname,
+                                age,
+                                false
+                        );
+
+                        userDbRef.child(firebaseUser.getUid()).setValue(user);
+                    }
+                })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {

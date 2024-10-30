@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,9 +18,7 @@ import com.example.messenger.User;
 import com.example.messenger.signIn.SignInActivity;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class UsersActivity extends AppCompatActivity {
 
@@ -83,12 +82,34 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
+        this.viewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String message) {
+                if (message != null) {
+                    Toast.makeText(
+                            UsersActivity.this,
+                            message,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        });
+
         this.viewModel.getUser().observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser user) {
                 if (user == null) {
                     launchLoginScreen();
                     finish();
+                }
+            }
+        });
+
+        this.viewModel.getUsers().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                if (users != null) {
+                    usersAdapter.setUsers(users);
                 }
             }
         });

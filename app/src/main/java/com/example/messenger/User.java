@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 
 public class User {
 
-    private final String id;
-    private final String name;
-    private final String lastname;
-    private final int age;
-    private final boolean isOnline;
+    private String id;
+    private String name;
+    private String lastname;
+    private int age;
+    private boolean isOnline;
+
+    public User() {}
 
     public User(
             String id,

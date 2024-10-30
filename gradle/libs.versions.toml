@@ -21,6 +21,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom_version" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
+firebase-database = { group = "com.google.firebase", name = "firebase-database" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit_version" }
 junit-ext = { group = "androidx.test.ext", name = "junit", version.ref = "junit_ext_version" }
