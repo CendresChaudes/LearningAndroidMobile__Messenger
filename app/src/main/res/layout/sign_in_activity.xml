@@ -8,7 +8,7 @@
     android:paddingTop="32dp"
     android:paddingEnd="8dp"
     android:paddingBottom="32dp"
-    tools:context=".login.LoginActivity">
+    tools:context=".signIn.SignInActivity">
 
     <TextView
         android:layout_width="match_parent"
