@@ -10,12 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
+import com.example.messenger.User;
 import com.example.messenger.signIn.SignInActivity;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class UsersActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerViewUsers;
+    private UsersAdapter usersAdapter;
 
     private UsersViewModel viewModel;
 
@@ -48,8 +57,20 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     private void initActivity() {
+        this.initViews();
         this.initViewModel();
+        this.initRecyclerView();
+
         this.observeViewModel();
+    }
+
+    private void initViews() {
+        this.recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
+    }
+
+    private void initRecyclerView() {
+        this.usersAdapter = new UsersAdapter();
+        this.recyclerViewUsers.setAdapter(this.usersAdapter);
     }
 
     private void initViewModel() {
