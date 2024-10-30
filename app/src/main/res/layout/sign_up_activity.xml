@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:hint="@string/name_hint"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:textSize="16sp" />
 
     <EditText
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:hint="@string/lastname_hint"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:textSize="16sp" />
 
     <EditText
