@@ -6,6 +6,7 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="sign_up">Sign up</string>
     <string name="sign_in">Sign in</string>
+    <string name="sign_out">Sign out</string>
     <string name="reset_password">Reset password</string>
     <string name="name_hint">Name</string>
     <string name="lastname_hint">Lastname</string>
