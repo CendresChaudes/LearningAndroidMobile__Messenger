@@ -22,7 +22,7 @@ public class SignUpViewModel extends AndroidViewModel {
 
     private final FirebaseAuth auth;
     private final FirebaseDatabase firebaseDatabase;
-    private final DatabaseReference userDbRef;
+    private final DatabaseReference usersDbRef;
 
     private final MutableLiveData<String> errorMessage;
     private final MutableLiveData<FirebaseUser> user;
@@ -32,7 +32,7 @@ public class SignUpViewModel extends AndroidViewModel {
 
         this.auth = FirebaseAuth.getInstance();
         this.firebaseDatabase = FirebaseDatabase.getInstance();
-        this.userDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
+        this.usersDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
 
         this.errorMessage = new MutableLiveData<>();
         this.user = new MutableLiveData<>();
@@ -66,13 +66,12 @@ public class SignUpViewModel extends AndroidViewModel {
                                 false
                         );
 
-                        userDbRef.child(firebaseUser.getUid()).setValue(user);
+                        usersDbRef.child(firebaseUser.getUid()).setValue(user);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        user.setValue(null);
                         errorMessage.setValue(e.getMessage());
                     }
                 });

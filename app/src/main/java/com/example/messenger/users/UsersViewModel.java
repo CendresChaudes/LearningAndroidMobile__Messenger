@@ -25,7 +25,7 @@ public class UsersViewModel extends AndroidViewModel {
 
     private final FirebaseAuth auth;
     private final FirebaseDatabase firebaseDatabase;
-    private final DatabaseReference userDbRef;
+    private final DatabaseReference usersDbRef;
 
     private final MutableLiveData<String> errorMessage;
     private final MutableLiveData<FirebaseUser> user;
@@ -36,7 +36,7 @@ public class UsersViewModel extends AndroidViewModel {
 
         this.auth = FirebaseAuth.getInstance();
         this.firebaseDatabase = FirebaseDatabase.getInstance();
-        this.userDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
+        this.usersDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
 
         this.errorMessage = new MutableLiveData<>();
         this.user = new MutableLiveData<>();
@@ -76,7 +76,7 @@ public class UsersViewModel extends AndroidViewModel {
     }
 
     private void setOnUsersDataChangeListener() {
-        this.userDbRef.addValueEventListener(new ValueEventListener() {
+        this.usersDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FirebaseUser currentUser = auth.getCurrentUser();
@@ -104,7 +104,6 @@ public class UsersViewModel extends AndroidViewModel {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                users.setValue(null);
                 errorMessage.setValue(error.getMessage());
             }
         });

@@ -40,8 +40,8 @@ public class SignUpActivity extends AppCompatActivity {
         this.initActivity();
     }
 
-    private void launchUsersScreen() {
-        Intent intent = UsersActivity.createIntent(this);
+    private void launchUsersScreen(String currentUserId) {
+        Intent intent = UsersActivity.createIntent(this, currentUserId);
         startActivity(intent);
     }
 
@@ -71,11 +71,12 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onChanged(String message) {
                 if (message != null) {
-                    Toast.makeText(
-                            SignUpActivity.this,
-                            message,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    SignUpActivity.this,
+                                    message,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
         });
@@ -84,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onChanged(FirebaseUser user) {
                 if (user != null) {
-                    launchUsersScreen();
+                    launchUsersScreen(user.getUid());
                     finish();
                 }
             }
@@ -121,23 +122,26 @@ public class SignUpActivity extends AppCompatActivity {
                 boolean isUpperAgeLimitInvalid = transformedAge > 125;
 
                 if (isSomeFieldEmpty) {
-                    Toast.makeText(
-                            SignUpActivity.this,
-                            R.string.fields_cannot_be_empty,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    SignUpActivity.this,
+                                    R.string.fields_cannot_be_empty,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 } else if (isLowerAgeLimitInvalid) {
-                    Toast.makeText(
-                            SignUpActivity.this,
-                            R.string.you_must_be_at_least_16_years_old,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    SignUpActivity.this,
+                                    R.string.you_must_be_at_least_16_years_old,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 } else if (isUpperAgeLimitInvalid) {
-                    Toast.makeText(
-                            SignUpActivity.this,
-                            R.string.incorrect_age_specified,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    SignUpActivity.this,
+                                    R.string.incorrect_age_specified,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 } else {
                     viewModel.signUp(email, password, name, lastname, transformedAge);
                 }

@@ -3,7 +3,6 @@ package com.example.messenger.signIn;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,8 +52,8 @@ public class SignInActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void launchUsersScreen() {
-        Intent intent = UsersActivity.createIntent(this);
+    private void launchUsersScreen(String currentUserId) {
+        Intent intent = UsersActivity.createIntent(this, currentUserId);
         startActivity(intent);
     }
 
@@ -83,11 +82,12 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onChanged(String message) {
                 if (message != null) {
-                    Toast.makeText(
-                            SignInActivity.this,
-                            message,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    SignInActivity.this,
+                                    message,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
         });
@@ -96,8 +96,7 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onChanged(FirebaseUser user) {
                 if (user != null) {
-                    Log.d("q", user.toString());
-                    launchUsersScreen();
+                    launchUsersScreen(user.getUid());
                     finish();
                 }
             }
@@ -140,11 +139,12 @@ public class SignInActivity extends AppCompatActivity {
                 boolean isInvalid = email.isEmpty() || password.isEmpty();
 
                 if (isInvalid) {
-                    Toast.makeText(
-                            SignInActivity.this,
-                            R.string.fields_cannot_be_empty,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    SignInActivity.this,
+                                    R.string.fields_cannot_be_empty,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 } else {
                     viewModel.signIn(email, password);
                 }

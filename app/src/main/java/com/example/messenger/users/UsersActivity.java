@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
 import com.example.messenger.User;
+import com.example.messenger.chat.ChatActivity;
 import com.example.messenger.signIn.SignInActivity;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,14 +23,24 @@ import java.util.List;
 
 public class UsersActivity extends AppCompatActivity {
 
+    private static final String INTENT_EXTRA_KEY_CURRENT_USER_ID = "currentUserId";
+
     private RecyclerView recyclerViewUsers;
     private UsersAdapter usersAdapter;
 
     private UsersViewModel viewModel;
 
+    private String currentUserId;
+
     @NonNull
-    public static Intent createIntent(Context context) {
-        return new Intent(context, UsersActivity.class);
+    public static Intent createIntent(
+            Context context,
+            String currentUserId
+    ) {
+        Intent intent = new Intent(context, UsersActivity.class);
+        intent.putExtra(INTENT_EXTRA_KEY_CURRENT_USER_ID, currentUserId);
+
+        return intent;
     }
 
     @Override
@@ -55,20 +66,32 @@ public class UsersActivity extends AppCompatActivity {
         this.initActivity();
     }
 
+    private void launchLoginScreen() {
+        Intent intent = SignInActivity.createIntent(this);
+        startActivity(intent);
+    }
+
+    private void launchChatScreen(String theirUserId) {
+        Intent intent = ChatActivity.createIntent(this, currentUserId, theirUserId);
+        startActivity(intent);
+    }
+
     private void initActivity() {
+        this.getDataByIntent();
         this.initViews();
         this.initViewModel();
-        this.initRecyclerView();
 
         this.observeViewModel();
+        this.setOnUserItemClickListener();
+    }
+
+    private void getDataByIntent() {
+        this.currentUserId = getIntent().getStringExtra(INTENT_EXTRA_KEY_CURRENT_USER_ID);
     }
 
     private void initViews() {
-        this.recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
-    }
-
-    private void initRecyclerView() {
         this.usersAdapter = new UsersAdapter();
+        this.recyclerViewUsers = findViewById(R.id.recyclerViewUsers);
         this.recyclerViewUsers.setAdapter(this.usersAdapter);
     }
 
@@ -76,21 +99,17 @@ public class UsersActivity extends AppCompatActivity {
         this.viewModel = new ViewModelProvider(this).get(UsersViewModel.class);
     }
 
-    private void launchLoginScreen() {
-        Intent intent = SignInActivity.createIntent(this);
-        startActivity(intent);
-    }
-
     private void observeViewModel() {
         this.viewModel.getErrorMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String message) {
                 if (message != null) {
-                    Toast.makeText(
-                            UsersActivity.this,
-                            message,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    UsersActivity.this,
+                                    message,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
         });
@@ -111,6 +130,15 @@ public class UsersActivity extends AppCompatActivity {
                 if (users != null) {
                     usersAdapter.setUsers(users);
                 }
+            }
+        });
+    }
+
+    private void setOnUserItemClickListener() {
+        this.usersAdapter.setOnUserItemClickListener(new UsersAdapter.OnUserItemClickListener() {
+            @Override
+            public void onClick(User user) {
+                launchChatScreen(user.getId());
             }
         });
     }

@@ -15,4 +15,5 @@
     <string name="fields_cannot_be_empty">Fields cannot be empty</string>
     <string name="you_must_be_at_least_16_years_old">You must be at least 16 years old</string>
     <string name="incorrect_age_specified">Incorrect age specified</string>
+    <string name="input_your_message_hint">Input your message</string>
 </resources>

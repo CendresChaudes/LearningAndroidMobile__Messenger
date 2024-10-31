@@ -35,7 +35,6 @@ public class SignInViewModel extends AndroidViewModel {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        user.setValue(null);
                         errorMessage.setValue(e.getMessage());
                     }
                 });

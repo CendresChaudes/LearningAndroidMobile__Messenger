@@ -62,11 +62,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onChanged(String message) {
                 if (message != null) {
-                    Toast.makeText(
-                            ForgotPasswordActivity.this,
-                            message,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    ForgotPasswordActivity.this,
+                                    message,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
         });
@@ -75,11 +76,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean isSuccess) {
                 if (isSuccess) {
-                    Toast.makeText(
-                            ForgotPasswordActivity.this,
-                            R.string.message_successfully_sent,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    ForgotPasswordActivity.this,
+                                    R.string.message_successfully_sent,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 }
             }
         });
@@ -98,11 +100,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 boolean isInvalid = email.isEmpty();
 
                 if (isInvalid) {
-                    Toast.makeText(
-                            ForgotPasswordActivity.this,
-                            R.string.fields_cannot_be_empty,
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    Toast
+                            .makeText(
+                                    ForgotPasswordActivity.this,
+                                    R.string.fields_cannot_be_empty,
+                                    Toast.LENGTH_SHORT)
+                            .show();
                 } else {
                     viewModel.resetPassword(email);
                 }
