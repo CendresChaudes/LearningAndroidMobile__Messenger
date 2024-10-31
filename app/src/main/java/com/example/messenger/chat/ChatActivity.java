@@ -2,6 +2,7 @@ package com.example.messenger.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -63,6 +65,18 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_activity);
         this.initActivity();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.viewModel.setUserIsOnline(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.viewModel.setUserIsOnline(false);
     }
 
     private void initActivity() {
@@ -137,6 +151,21 @@ public class ChatActivity extends AppCompatActivity {
                     );
 
                     textViewUserInfo.setText(userInfo);
+
+                    int backgroundId;
+
+                    if (user.getIsOnline()) {
+                        backgroundId = R.drawable.circle_green;
+                    } else {
+                        backgroundId = R.drawable.circle_red;
+                    }
+
+                    Drawable background = ContextCompat.getDrawable(
+                            ChatActivity.this,
+                            backgroundId
+                    );
+
+                    viewIsOnline.setBackground(background);
                 }
             }
         });

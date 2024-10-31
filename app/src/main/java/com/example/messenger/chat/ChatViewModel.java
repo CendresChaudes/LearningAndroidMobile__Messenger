@@ -56,7 +56,14 @@ public class ChatViewModel extends ViewModel {
         this.setListeners();
     }
 
-    public void sendMessage(Message message) {
+    public void setUserIsOnline(Boolean isOnline) {
+        this.usersDbRef
+                .child(this.currentUserId)
+                .child("isOnline")
+                .setValue(isOnline);
+    }
+
+    public void sendMessage(@NonNull Message message) {
         this.messagesDbRef
                 .child(message.getSenderId())
                 .child(message.getReceiverId())

@@ -66,6 +66,18 @@ public class UsersActivity extends AppCompatActivity {
         this.initActivity();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.viewModel.setUserIsOnline(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.viewModel.setUserIsOnline(false);
+    }
+
     private void launchLoginScreen() {
         Intent intent = SignInActivity.createIntent(this);
         startActivity(intent);
