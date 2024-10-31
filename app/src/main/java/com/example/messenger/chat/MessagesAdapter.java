@@ -8,11 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.messenger.Message;
+import com.example.messenger.common.Message;
 import com.example.messenger.R;
-import com.example.messenger.users.UsersAdapter;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     private static final int VIEW_TYPE_THEIR_MESSAGE = 2;
 
     private List<Message> messages;
-    private String currentUserId;
+    private final String currentUserId;
 
     public MessagesAdapter(String currentUserId) {
         this.messages = new ArrayList<>();

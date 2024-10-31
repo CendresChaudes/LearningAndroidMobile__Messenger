@@ -1,15 +1,12 @@
 package com.example.messenger.chat;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.messenger.Message;
-import com.example.messenger.User;
+import com.example.messenger.common.Message;
+import com.example.messenger.common.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,12 +20,12 @@ import java.util.List;
 
 public class ChatViewModel extends ViewModel {
 
-    private static final String USERS_DB_NAME = "users";
-    private static final String MESSAGES_DB_NAME = "messages";
+    private static final String USERS_COLLECTION_NAME = "users";
+    private static final String MESSAGES_COLLECTION_NAME = "messages";
 
     private final FirebaseDatabase firebaseDatabase;
-    private final DatabaseReference usersDbRef;
-    private final DatabaseReference messagesDbRef;
+    private final DatabaseReference usersCollectionRef;
+    private final DatabaseReference messagesCollectionRef;
 
     private final MutableLiveData<List<Message>> messages;
     private final MutableLiveData<User> theirUser;
@@ -43,8 +40,8 @@ public class ChatViewModel extends ViewModel {
             String theirUserId
     ) {
         this.firebaseDatabase = FirebaseDatabase.getInstance();
-        this.usersDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
-        this.messagesDbRef = this.firebaseDatabase.getReference(MESSAGES_DB_NAME);
+        this.usersCollectionRef = this.firebaseDatabase.getReference(USERS_COLLECTION_NAME);
+        this.messagesCollectionRef = this.firebaseDatabase.getReference(MESSAGES_COLLECTION_NAME);
 
         this.currentUserId = currentUserId;
         this.theirUserId = theirUserId;
@@ -57,14 +54,14 @@ public class ChatViewModel extends ViewModel {
     }
 
     public void setUserIsOnline(Boolean isOnline) {
-        this.usersDbRef
+        this.usersCollectionRef
                 .child(this.currentUserId)
                 .child("isOnline")
                 .setValue(isOnline);
     }
 
     public void sendMessage(@NonNull Message message) {
-        this.messagesDbRef
+        this.messagesCollectionRef
                 .child(message.getSenderId())
                 .child(message.getReceiverId())
                 .push()
@@ -72,7 +69,7 @@ public class ChatViewModel extends ViewModel {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        messagesDbRef
+                        messagesCollectionRef
                                 .child(message.getReceiverId())
                                 .child(message.getSenderId())
                                 .push()
@@ -121,7 +118,7 @@ public class ChatViewModel extends ViewModel {
     }
 
     private void setOnTheirUserAddValueListener() {
-        this.usersDbRef
+        this.usersCollectionRef
                 .child(this.theirUserId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -138,7 +135,7 @@ public class ChatViewModel extends ViewModel {
     }
 
     private void setOnMessagesAddValueListener() {
-        this.messagesDbRef
+        this.messagesCollectionRef
                 .child(this.currentUserId)
                 .child(this.theirUserId)
                 .addValueEventListener(new ValueEventListener() {

@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.messenger.User;
+import com.example.messenger.common.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,11 +21,11 @@ import java.util.List;
 
 public class UsersViewModel extends AndroidViewModel {
 
-    private static final String USERS_DB_NAME = "users";
+    private static final String USERS_COLLECTION_NAME = "users";
 
     private final FirebaseAuth auth;
     private final FirebaseDatabase firebaseDatabase;
-    private final DatabaseReference usersDbRef;
+    private final DatabaseReference usersCollectionRef;
 
     private final MutableLiveData<String> errorMessage;
     private final MutableLiveData<FirebaseUser> user;
@@ -36,7 +36,7 @@ public class UsersViewModel extends AndroidViewModel {
 
         this.auth = FirebaseAuth.getInstance();
         this.firebaseDatabase = FirebaseDatabase.getInstance();
-        this.usersDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
+        this.usersCollectionRef = this.firebaseDatabase.getReference(USERS_COLLECTION_NAME);
 
         this.errorMessage = new MutableLiveData<>();
         this.user = new MutableLiveData<>();
@@ -49,7 +49,7 @@ public class UsersViewModel extends AndroidViewModel {
         FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
-            this.usersDbRef
+            this.usersCollectionRef
                     .child(user.getUid())
                     .child("isOnline")
                     .setValue(isOnline);
@@ -88,7 +88,7 @@ public class UsersViewModel extends AndroidViewModel {
     }
 
     private void setOnUsersDataChangeListener() {
-        this.usersDbRef.addValueEventListener(new ValueEventListener() {
+        this.usersCollectionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FirebaseUser currentUser = auth.getCurrentUser();

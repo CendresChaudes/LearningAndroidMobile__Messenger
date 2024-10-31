@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
-import com.example.messenger.User;
+import com.example.messenger.common.User;
 import com.example.messenger.chat.ChatActivity;
 import com.example.messenger.signIn.SignInActivity;
 import com.google.firebase.auth.FirebaseUser;

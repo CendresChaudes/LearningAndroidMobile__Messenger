@@ -10,23 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.messenger.Message;
+import com.example.messenger.common.Message;
 import com.example.messenger.R;
-import com.example.messenger.User;
-import com.example.messenger.signIn.SignInViewModel;
+import com.example.messenger.common.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {

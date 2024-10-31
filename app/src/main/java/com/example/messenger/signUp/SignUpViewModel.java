@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.messenger.User;
+import com.example.messenger.common.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -18,11 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpViewModel extends AndroidViewModel {
 
-    private static final String USERS_DB_NAME = "users";
+    private static final String USERS_COLLECTION_NAME = "users";
 
     private final FirebaseAuth auth;
     private final FirebaseDatabase firebaseDatabase;
-    private final DatabaseReference usersDbRef;
+    private final DatabaseReference usersCollectionRef;
 
     private final MutableLiveData<String> errorMessage;
     private final MutableLiveData<FirebaseUser> user;
@@ -32,7 +32,7 @@ public class SignUpViewModel extends AndroidViewModel {
 
         this.auth = FirebaseAuth.getInstance();
         this.firebaseDatabase = FirebaseDatabase.getInstance();
-        this.usersDbRef = this.firebaseDatabase.getReference(USERS_DB_NAME);
+        this.usersCollectionRef = this.firebaseDatabase.getReference(USERS_COLLECTION_NAME);
 
         this.errorMessage = new MutableLiveData<>();
         this.user = new MutableLiveData<>();
@@ -66,7 +66,7 @@ public class SignUpViewModel extends AndroidViewModel {
                                 false
                         );
 
-                        usersDbRef.child(firebaseUser.getUid()).setValue(user);
+                        usersCollectionRef.child(firebaseUser.getUid()).setValue(user);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.messenger.R;
-import com.example.messenger.User;
+import com.example.messenger.common.User;
 
 import java.util.ArrayList;
 import java.util.List;
